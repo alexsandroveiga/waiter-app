@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { FlatList, Modal } from 'react-native';
 import { Product } from '../../types/product';
 import { formatCurrency } from '../../utils/formatCurrency';
@@ -11,11 +10,17 @@ type TableModalProps = {
   visible: boolean
   onClose: () => void
   product: Product | null
+  onAddToCart: (product: Product) => void
 }
 
-export function ProductModal({ visible, onClose, product }: TableModalProps) {
+export function ProductModal({ visible, onClose, product, onAddToCart }: TableModalProps) {
   if (!product) {
     return null;
+  }
+
+  function handleAddToCart() {
+    onAddToCart(product!);
+    onClose();
   }
 
   return (
@@ -63,7 +68,7 @@ export function ProductModal({ visible, onClose, product }: TableModalProps) {
             <Text size={20} weight="600">{formatCurrency(product.price)}</Text>
           </PriceContainer>
 
-          <Button onPress={() => alert('Adicionar o pedido')}>
+          <Button onPress={() => handleAddToCart()}>
             Adicionar ao pedido
           </Button>
         </FooterContainer>
