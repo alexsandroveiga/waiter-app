@@ -14,9 +14,10 @@ type CartProps = {
   cartItems: CartItem[]
   onAdd: (product: Product) => void
   onDecrement: (product: Product) => void
+  onConfirmOrder: () => void
 }
 
-export function Cart({ cartItems, onAdd, onDecrement }: CartProps) {
+export function Cart({ cartItems, onAdd, onDecrement, onConfirmOrder }: CartProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const total = cartItems.reduce((acc, cartItem) => {
@@ -27,9 +28,14 @@ export function Cart({ cartItems, onAdd, onDecrement }: CartProps) {
     setIsModalVisible(true);
   }
 
+  function handleOk() {
+    onConfirmOrder();
+    setIsModalVisible(false);
+  }
+
   return (
     <>
-      <OrderConfirmedModal visible={isModalVisible} />
+      <OrderConfirmedModal visible={isModalVisible} onOk={handleOk} />
 
       {cartItems.length > 0 && (
         <FlatList
@@ -49,18 +55,18 @@ export function Cart({ cartItems, onAdd, onDecrement }: CartProps) {
                 <ProductDetails>
                   <Text size={14} weight="600">{cartItem.product.name}</Text>
                   <Text size={14} color="#666" style={{ marginTop: 4 }}>{formatCurrency(cartItem.product.price)}</Text>
-                </ProductDetails>            
+                </ProductDetails>
               </ProductContainer>
 
               <Actions>
                 <TouchableOpacity style={{ marginRight: 24 }} onPress={() => onAdd(cartItem.product)}>
                   <PlusCircle />
-                </TouchableOpacity> 
+                </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => onDecrement(cartItem.product)}>
                   <MinusCircle />
-                </TouchableOpacity> 
-              </Actions>          
+                </TouchableOpacity>
+              </Actions>
             </Item>
           )}
         />
