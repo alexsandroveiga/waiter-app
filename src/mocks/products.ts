@@ -62,16 +62,7 @@ export const products2 = [
     'description': 'Qualquer descrição',
     'imagePath': 'https://waiter-app.s3.amazonaws.com/1668563622087_ff8cecbb-335d-4f4e-8fa3-68f7a95e7f2a.png',
     'price': 1,
-    'ingredients': [
-      {
-        'name': 'Ovos',
-        'icon': '🥚'
-      },
-      {
-        'name': 'Bacon',
-        'icon': '🥓'
-      }
-    ]
+    'ingredients': []
   },
   {
     'id': '637442bf2e060e12689f9fbe',
